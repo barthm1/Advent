@@ -30,8 +30,7 @@ def main():
 
     dates = get_sunday_in_advent(today.year)
     # print (dates)
-
-    today = datetime.date(today.year, 12, 25)
+    #today = datetime.date(today.year, 12, 25)
 
     if today < dates[0]:
        print ("Too early- Bye")
