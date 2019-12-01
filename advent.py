@@ -6,6 +6,8 @@ Pete Shinners, April 3, 2001
 
 Extended by M. Barth
 27.11.2019
+python3 compatibility
+1.12.19
 """
 
 
@@ -30,7 +32,7 @@ def main():
 
     dates = get_sunday_in_advent(today.year)
     # print (dates)
-    #today = datetime.date(today.year, 12, 25)
+    # today = datetime.date(today.year, 12, 25)
 
     if today < dates[0]:
        print ("Too early- Bye")
@@ -41,16 +43,16 @@ def main():
     pygame.init()
 
     f_list = []
-    t1 = Rect (10, 0, 40, 100)
-    t2 = Rect (80, 0, 40, 100)
-    t3 = Rect (140, 0 , 40, 100)
-    t4 = Rect (210, 0, 40, 100)
+    t1 = Rect (10, 0, 40, 97)
+    t2 = Rect (80, 0, 40, 97)
+    t3 = Rect (140, 0 , 40, 97)
+    t4 = Rect (210, 0, 40, 97)
 
     c_list = []
-    c1 = Rect (10, 100, 40, 100)
-    c2 = Rect (80,100, 40, 100)
-    c3 = Rect (140, 100, 40, 100)
-    c4 = Rect (210, 100, 40, 100)
+    c1 = Rect (10, 97, 40, 100)
+    c2 = Rect (80,97, 40, 100)
+    c3 = Rect (140, 97, 40, 100)
+    c4 = Rect (210, 97, 40, 100)
 
     if today >= dates[0]:
        f_list.append (t1)
@@ -71,7 +73,8 @@ def main():
 
     screen = pygame.display.set_mode(RES, 0, 8)
     setpalette(screen)
-    flame = np.zeros(RES / 2 + (0,3), dtype=int)
+    # flame = np.zeros(RES / 2 + (0,3), dtype=int)
+    flame = np.zeros((140, 100), dtype = int)
     miniflame = pygame.Surface((RES[0]/2, RES[1]/2), 0, 8)
     miniflame.set_palette(screen.get_palette())
     randomflamebase(flame)
@@ -148,15 +151,16 @@ def processflame(flame):
 
 def blitdouble(screen, flame, miniflame):
     # double the size of the data, and blit to screen
-    blit_array(miniflame, flame[:,:-3])
+    blit_array(miniflame, flame[:,:])
     # s2 = pygame.transform.scale(miniflame, screen.get_size())
     s2 = pygame.transform.scale(miniflame, (280, 100))
+
     screen.blit(s2, (0,0))
 
 def get_sunday_in_advent(year):
     christmas = datetime.date(year, 12, 25)
     offset = datetime.timedelta(days = christmas.isoweekday())
-    sundays = [christmas - offset - datetime.timedelta(weeks=week) for week in xrange(4)]
+    sundays = [christmas - offset - datetime.timedelta(weeks=week) for week in range(4)]
     sundays.sort()
     return sundays
 
